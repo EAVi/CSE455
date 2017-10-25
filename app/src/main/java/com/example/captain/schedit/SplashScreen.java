@@ -21,16 +21,16 @@ public class SplashScreen extends AppCompatActivity {
                 .withLogo(R.drawable.sch)
                 .withHeaderText("Welcome to Schedit")
                 .withFooterText("2017")
-                .withBeforeLogoText("by SAAVFOXDEV")
-                .withAfterLogoText("Start scheduling");
+                .withBeforeLogoText("")
+                .withAfterLogoText("Art by SAAVFOXDEV");
 
 
                 //text color
 
-        config.getHeaderTextView().setTextColor(Color.WHITE);
-        config.getFooterTextView().setTextColor(Color.WHITE);
-        config.getAfterLogoTextView().setTextColor(Color.WHITE);
-        config.getBeforeLogoTextView().setTextColor(Color.WHITE);
+        config.getHeaderTextView().setTextColor(Color.BLACK);
+        config.getFooterTextView().setTextColor(Color.BLACK);
+        config.getAfterLogoTextView().setTextColor(Color.BLACK);
+        config.getBeforeLogoTextView().setTextColor(Color.BLACK);
 
         //set view
 

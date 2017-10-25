@@ -30,21 +30,25 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Schedit"
-            android:textColor="@android:color/background_light"
-            android:textSize="30dp" />
+            android:text="@string/app_name"
+            android:textColor="@android:color/holo_red_light"
+            android:textSize="30sp" />
 
     </android.support.v7.widget.Toolbar>
 
 
+
+
     <android.support.design.widget.TabLayout
-        android:id="@+id/tablayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:id="@+id/tablayout"
         android:background="@color/colorPrimaryDark"
-        android:minHeight="?attr/actionBarSize">
+        android:minHeight="?attr/actionBarSize"
+        >
 
     </android.support.design.widget.TabLayout>
+
 
     <android.support.v4.view.ViewPager
         android:layout_width="match_parent"
