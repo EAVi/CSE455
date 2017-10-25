@@ -16,40 +16,35 @@
     </android.support.design.widget.AppBarLayout>
 
 
-
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
 
-        android:background="?attr/colorPrimary"
+        android:background="@color/cardview_dark_background"
         android:minHeight="?attr/actionBarSize"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" >
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
 
         <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Schedit"
-        android:textSize="30dp"
-            android:textColor="@android:color/holo_red_light"/>
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Schedit"
+            android:textColor="@android:color/background_light"
+            android:textSize="30dp" />
 
     </android.support.v7.widget.Toolbar>
 
 
-
-
     <android.support.design.widget.TabLayout
+        android:id="@+id/tablayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/tablayout"
         android:background="@color/colorPrimaryDark"
-        android:minHeight="?attr/actionBarSize"
-        >
+        android:minHeight="?attr/actionBarSize">
 
     </android.support.design.widget.TabLayout>
-
 
     <android.support.v4.view.ViewPager
         android:layout_width="match_parent"
