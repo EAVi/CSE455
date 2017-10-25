@@ -33,9 +33,9 @@ public class MainActivity extends AppCompatActivity implements Tab1.OnFragmentIn
 
 
         final TabLayout tabLayout = (TabLayout)findViewById(R.id.tablayout);
-        tabLayout.addTab(tabLayout.newTab().setText("Ending Soon"));
-        tabLayout.addTab(tabLayout.newTab().setText("Favorite"));
-        tabLayout.addTab(tabLayout.newTab().setText("Ideas"));
+        tabLayout.addTab(tabLayout.newTab().setText(R.string.app_endingsoon));//uses the strings from strings.xml rather than hardcoding them
+        tabLayout.addTab(tabLayout.newTab().setText(R.string.app_favorite));
+        tabLayout.addTab(tabLayout.newTab().setText(R.string.app_calendar));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
 

@@ -1,5 +1,9 @@
 <resources>
     <string name="app_name">Schedit</string>
+    <string name="app_endingsoon">Ending Soon</string>
+    <string name="app_favorite">Favorite</string>
+    <string name="app_calendar">Calendar</string>
+    <string name="app_start">Let\'s Get Started!</string>
     <string name="action_settings">Settings</string>
 
     <!-- TODO: Remove or change this placeholder text -->
