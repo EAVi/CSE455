@@ -17,7 +17,8 @@ import android.view.ViewGroup;
  * Use the {@link Tab1#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class Tab1 extends Fragment {
+public class Tab1 extends Fragment
+{
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -53,6 +54,8 @@ public class Tab1 extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+
+
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
@@ -60,12 +63,24 @@ public class Tab1 extends Fragment {
         }
     }
 
+
+
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_tab1, container, false);
     }
+
+
+
+
+
+
+
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
