@@ -47,12 +47,16 @@ public class MainActivity extends AppCompatActivity implements Tab1.OnFragmentIn
     }
 
 
-
     DbHelper dbHelper;
     ArrayAdapter<String> mAdapter;
     ListView lstTask;
 
+    @Override
+    public boolean onPrepareOptionsMenu(final Menu menu) {
+        getMenuInflater().inflate(R.menu.menu, menu);
 
+        return super.onCreateOptionsMenu(menu);
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -131,7 +135,7 @@ public class MainActivity extends AppCompatActivity implements Tab1.OnFragmentIn
     }
 
 
-
+//load tasks into the list
     private void loadTaskList(){
 
         ArrayList<String> taskList = dbHelper.getTaskList();
@@ -147,15 +151,9 @@ public class MainActivity extends AppCompatActivity implements Tab1.OnFragmentIn
     }
 
 
-
-    @Override
-    public boolean onPrepareOptionsMenu(final Menu menu) {
-        getMenuInflater().inflate(R.menu.menu, menu);
-
-        return super.onCreateOptionsMenu(menu);
-    }
-
-
+//actions to do when the menu item is selected
+    //contains the add a new task button
+    //contains the settings button
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
@@ -177,12 +175,13 @@ public class MainActivity extends AppCompatActivity implements Tab1.OnFragmentIn
                         .create();
                 dialog.show();
                 return true;
+            case R.id.action_settings:
         }
         return super.onOptionsItemSelected(item);
     }
 
 
-
+//delete the task with dbhelper and reload the list
     public void deleteTask(View view){
 
         View parent = (View)view.getParent();
@@ -194,7 +193,7 @@ public class MainActivity extends AppCompatActivity implements Tab1.OnFragmentIn
 
 
 
-
+//    no code here
     /**
      * A native method that is implemented by the 'native-lib' native library,
      * which is packaged with this application.
