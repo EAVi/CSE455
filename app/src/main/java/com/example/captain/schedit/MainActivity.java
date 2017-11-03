@@ -1,45 +1,29 @@
 package com.example.captain.schedit;
-import android.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.support.v7.widget.Toolbar;
 import android.content.DialogInterface;
-import android.database.sqlite.SQLiteDatabase;
-import android.graphics.PorterDuff;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
-import android.os.Build;
-import android.os.Bundle;
-import android.support.annotation.RequiresApi;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.view.PagerAdapter;
+import android.support.v4.app.Fragment;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.ActionBarContainer;
-import android.view.MenuInflater;
 import android.view.View;
-import android.widget.ActionMenuView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.support.v7.app.AppCompatActivity;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.TextView;
-
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
-public class MainActivity extends AppCompatActivity implements Tab1.OnFragmentInteractionListener, Tab2.OnFragmentInteractionListener, Tab3.OnFragmentInteractionListener {
+//made abstract 11/5
+public  class MainActivity extends AppCompatActivity implements Tab1.OnFragmentInteractionListener, Tab2.OnFragmentInteractionListener, Tab3.OnFragmentInteractionListener {
 
     // Used to load the 'native-lib' library on application startup.
     static {
@@ -47,12 +31,19 @@ public class MainActivity extends AppCompatActivity implements Tab1.OnFragmentIn
     }
 
 
-
     DbHelper dbHelper;
     ArrayAdapter<String> mAdapter;
     ListView lstTask;
 
 
+
+
+    @Override
+    public boolean onPrepareOptionsMenu(final Menu menu) {
+        getMenuInflater().inflate(R.menu.menu, menu);
+
+        return super.onCreateOptionsMenu(menu);
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -62,6 +53,9 @@ public class MainActivity extends AppCompatActivity implements Tab1.OnFragmentIn
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
+
+
+
         
         Toolbar toolbar = (Toolbar) findViewById(R.id.app_bar);
         setSupportActionBar(toolbar);
@@ -132,6 +126,8 @@ public class MainActivity extends AppCompatActivity implements Tab1.OnFragmentIn
 
 
 
+
+//load tasks into the list
     private void loadTaskList(){
 
         ArrayList<String> taskList = dbHelper.getTaskList();
@@ -141,21 +137,18 @@ public class MainActivity extends AppCompatActivity implements Tab1.OnFragmentIn
         }else {
             mAdapter.clear();
             mAdapter.addAll(taskList);
-            //mAdapter.notifyDataSetChanged();
+            mAdapter.notifyDataSetChanged();
+
         }
 
+
     }
 
 
 
-    @Override
-    public boolean onPrepareOptionsMenu(final Menu menu) {
-        getMenuInflater().inflate(R.menu.menu, menu);
-
-        return super.onCreateOptionsMenu(menu);
-    }
-
-
+//actions to do when the menu item is selected
+    //contains the add a new task button
+    //contains the settings button
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
@@ -170,19 +163,22 @@ public class MainActivity extends AppCompatActivity implements Tab1.OnFragmentIn
                             public void onClick(DialogInterface dialog, int which) {
                                 String task = String.valueOf(taskEditText.getText());
                                 dbHelper.insertNewTask(task);
+
                                 loadTaskList();
+
                             }
                         })
                         .setNegativeButton("Cancel",null)
                         .create();
                 dialog.show();
+
                 return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
 
-
+//delete the task with dbhelper and reload the list
     public void deleteTask(View view){
 
         View parent = (View)view.getParent();
@@ -190,16 +186,11 @@ public class MainActivity extends AppCompatActivity implements Tab1.OnFragmentIn
         String task = String.valueOf(taskTextView.getText());
         dbHelper.deleteTask(task);
         loadTaskList();
+
     }
 
 
 
-
-    /**
-     * A native method that is implemented by the 'native-lib' native library,
-     * which is packaged with this application.
-     */
-    public native String stringFromJNI();
 
     @Override
     public void onFragmentInteraction(Uri uri) {

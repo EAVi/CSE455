@@ -1,12 +1,16 @@
 package com.example.captain.schedit;
-
+import android.support.v4.app.Fragment;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import android.support.v4.view.PagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+
+import java.util.ArrayList;
 
 
 /**
@@ -19,6 +23,7 @@ import android.view.ViewGroup;
  */
 public class Tab1 extends Fragment
 {
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -30,9 +35,16 @@ public class Tab1 extends Fragment
 
     private OnFragmentInteractionListener mListener;
 
+//==============================================
+    DbHelper dbHelper;
+    ArrayAdapter<String> mAdapter;
+    ListView lstTask;
+//===============================================
     public Tab1() {
         // Required empty public constructor
     }
+
+
 
     /**
      * Use this factory method to create a new instance of
@@ -49,36 +61,60 @@ public class Tab1 extends Fragment
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
-        return fragment;
+
+           return fragment;
     }
+
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
 
 
         super.onCreate(savedInstanceState);
+
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
+
         }
+
     }
 
 
+    //load tasks into the list
+    private void loadTaskList() {
+
+        ArrayList<String> taskList = dbHelper.getTaskList();
+        if (mAdapter == null) {
+            mAdapter = new ArrayAdapter<String>(getActivity(), R.layout.row, R.id.task_title, taskList);
+            lstTask.setAdapter(mAdapter);
+
+        } else {
+            mAdapter.clear();
+            mAdapter.addAll(taskList);
+            mAdapter.notifyDataSetChanged();
+        }
+
+    }
 
 
-
-    @Override
+        @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_tab1, container, false);
+        //========================================
+
+        View frag1 = inflater.inflate(R.layout.fragment_tab1, container, false);
+
+        dbHelper = new DbHelper(getActivity());
+        lstTask = (ListView)frag1.findViewById(R.id.lstTask);
+
+        loadTaskList();
+
+            return frag1;
+
     }
-
-
-
-
-
 
 
 
@@ -88,6 +124,8 @@ public class Tab1 extends Fragment
             mListener.onFragmentInteraction(uri);
         }
     }
+
+
 
     @Override
     public void onAttach(Context context) {

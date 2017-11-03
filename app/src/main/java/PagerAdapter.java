@@ -1,31 +1,36 @@
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.view.ViewGroup;
 
 import com.example.captain.schedit.Tab1;
 import com.example.captain.schedit.Tab2;
 import com.example.captain.schedit.Tab3;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Created by saavf on 10/23/2017.
  */
 
-public class PagerAdapter extends FragmentStatePagerAdapter {
+public class PagerAdapter extends FragmentPagerAdapter {
 
     int mNoOfTabs;
 
-    public PagerAdapter(FragmentManager fm, int NumberOfTabs)
-    {
+    public PagerAdapter(FragmentManager fm, int NumberOfTabs) {
         super(fm);
         this.mNoOfTabs = NumberOfTabs;
     }
+
     @Override
     public Fragment getItem(int position) {
 
-        switch(position){
+        switch (position) {
 
             case 0:
-                    Tab1 tab1 = new Tab1();
+                Tab1 tab1 = new Tab1();
                 return tab1;
             case 1:
                 Tab2 tab2 = new Tab2();
@@ -35,7 +40,7 @@ public class PagerAdapter extends FragmentStatePagerAdapter {
                 return tab3;
 
             default:
-            return null;
+                return null;
         }
 
     }
@@ -44,4 +49,6 @@ public class PagerAdapter extends FragmentStatePagerAdapter {
     public int getCount() {
         return mNoOfTabs;
     }
+
+
 }
