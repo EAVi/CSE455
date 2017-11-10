@@ -32,7 +32,8 @@
         android:id="@+id/pager"
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
-        android:backgroundTint="@android:color/darker_gray">
+        android:backgroundTint="@android:color/darker_gray"
+        android:visibility="visible">
 
         <ListView
             android:id="@+id/lstTask"
