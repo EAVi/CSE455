@@ -17,6 +17,7 @@ import java.util.ArrayList;
 public class DbHelper extends SQLiteOpenHelper {
 
 //table and column definitions
+    //changed database
     private static final String DB_NAME= "SCHEDITDB";
     private static final  int DB_VER = 1;
     public static final String DB_TABLE = "Tasks";
