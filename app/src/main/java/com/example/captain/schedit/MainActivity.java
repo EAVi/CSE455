@@ -103,6 +103,14 @@ public  class MainActivity extends AppCompatActivity implements Tab1.OnFragmentI
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 viewPager.setCurrentItem(tab.getPosition());
+//////////////////////////////////////////////////////////////////////////////
+                Fragment fragment = ((FragmentPagerAdapter)viewPager.getAdapter()).getItem(tab.getPosition());
+
+                if (tab.getPosition() ==1 && fragment != null)
+                {
+                    fragment.onResume();
+                }
+///////////////////////////////////////////////////////////////////////////////
             }
 
             @Override

@@ -1,9 +1,11 @@
+import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.view.ViewGroup;
 
+import com.example.captain.schedit.MainActivity;
 import com.example.captain.schedit.Tab1;
 import com.example.captain.schedit.Tab2;
 import com.example.captain.schedit.Tab3;
@@ -19,9 +21,23 @@ public class PagerAdapter extends FragmentPagerAdapter {
 
     int mNoOfTabs;
 
-    public PagerAdapter(FragmentManager fm, int NumberOfTabs) {
+    private Map<Integer, String> mFragmentTags;
+    private FragmentManager mFragmentManager;
+    private Context mContext;
+
+
+
+
+
+
+
+    public PagerAdapter(FragmentManager fm, int NumberOfTabs, Context context) {
         super(fm);
         this.mNoOfTabs = NumberOfTabs;
+
+        mFragmentManager = fm;
+        mFragmentTags = new HashMap<Integer, String>();
+        mContext = context;
     }
 
     @Override
@@ -50,5 +66,24 @@ public class PagerAdapter extends FragmentPagerAdapter {
         return mNoOfTabs;
     }
 
+    @Override
+    public Object instantiateItem(ViewGroup container, int position) {
+        Object obj = super.instantiateItem(container, position);
+        if (obj instanceof Fragment) {
+            // record the fragment tag here.
+            Fragment f = (Fragment) obj;
+            String tag = f.getTag();
+            mFragmentTags.put(position, tag);
+        }
+        return obj;
+    }
+
+
+    public Fragment getFragment(int position) {
+        String tag = mFragmentTags.get(position);
+        if (tag == null)
+            return null;
+        return mFragmentManager.findFragmentByTag(tag);
+    }
 
 }

@@ -3,11 +3,12 @@ import android.support.v4.app.Fragment;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.view.PagerAdapter;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -96,7 +97,9 @@ public class Tab1 extends Fragment
             mAdapter.notifyDataSetChanged();
         }
 
+
     }
+
 
 
         @Override
@@ -111,8 +114,8 @@ public class Tab1 extends Fragment
         lstTask = (ListView)frag1.findViewById(R.id.lstTask);
 
         loadTaskList();
-
             return frag1;
+
 
     }
 
@@ -125,8 +128,13 @@ public class Tab1 extends Fragment
         }
     }
 
-
-
+    @Override
+    public void onResume() {
+        //do the data changes. In this case, I am refreshing the arrayList cart_list and then calling the listview to refresh.
+        super.onResume();
+        loadTaskList();
+        lstTask.setAdapter(mAdapter);
+    }
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -144,16 +152,7 @@ public class Tab1 extends Fragment
         mListener = null;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
+
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
