@@ -96,7 +96,7 @@ public class Tab1 extends Fragment
             mAdapter.addAll(taskList);
             mAdapter.notifyDataSetChanged();
         }
-
+    super.onResume();
 
     }
 

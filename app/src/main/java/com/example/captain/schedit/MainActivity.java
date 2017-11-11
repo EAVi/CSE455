@@ -1,4 +1,5 @@
 package com.example.captain.schedit;
+import android.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -106,7 +107,7 @@ public  class MainActivity extends AppCompatActivity implements Tab1.OnFragmentI
 //////////////////////////////////////////////////////////////////////////////
                 Fragment fragment = ((FragmentPagerAdapter)viewPager.getAdapter()).getItem(tab.getPosition());
 
-                if (tab.getPosition() ==1 && fragment != null)
+                if ((tab.getPosition() ==0 || tab.getPosition() == 3 || tab.getPosition() == 2 || tab.getPosition() == 1) && fragment != null)
                 {
                     fragment.onResume();
                 }
@@ -114,13 +115,18 @@ public  class MainActivity extends AppCompatActivity implements Tab1.OnFragmentI
             }
 
             @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
+            public  void onTabUnselected(TabLayout.Tab tab) {
                 viewPager.setCurrentItem(tab.getPosition());
+                Fragment fragment = ((FragmentPagerAdapter)viewPager.getAdapter()).getItem(tab.getPosition());
+
             }
 
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
                 viewPager.setCurrentItem(tab.getPosition());
+                Fragment fragment = ((FragmentPagerAdapter)viewPager.getAdapter()).getItem(tab.getPosition());
+
+
             }
 
 
@@ -142,6 +148,7 @@ public  class MainActivity extends AppCompatActivity implements Tab1.OnFragmentI
         if(mAdapter==null){
             mAdapter = new ArrayAdapter<String>(this,R.layout.row,R.id.task_title,taskList);
             lstTask.setAdapter(mAdapter);
+
         }else {
             mAdapter.clear();
             mAdapter.addAll(taskList);
@@ -150,7 +157,7 @@ public  class MainActivity extends AppCompatActivity implements Tab1.OnFragmentI
         }
 
 
-    }
+         }
 
 
 
@@ -182,6 +189,7 @@ public  class MainActivity extends AppCompatActivity implements Tab1.OnFragmentI
 
                 return true;
         }
+
         return super.onOptionsItemSelected(item);
     }
 
@@ -194,6 +202,7 @@ public  class MainActivity extends AppCompatActivity implements Tab1.OnFragmentI
         String task = String.valueOf(taskTextView.getText());
         dbHelper.deleteTask(task);
         loadTaskList();
+
 
     }
 
