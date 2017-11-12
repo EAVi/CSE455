@@ -185,8 +185,14 @@ public  class MainActivity extends AppCompatActivity implements Tab1.OnFragmentI
         View parent = (View)view.getParent();
         TextView taskTextView = (TextView)parent.findViewById(R.id.task_title);
         String task = String.valueOf(taskTextView.getText());
+
         dbHelper.deleteTask(task);
+
         loadTaskList();
+
+        if(getFragmentRefreshListener()!=null) {
+            getFragmentRefreshListener().onRefresh();
+        }
 
 
 
