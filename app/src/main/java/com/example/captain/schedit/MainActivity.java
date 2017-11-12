@@ -38,6 +38,20 @@ public  class MainActivity extends AppCompatActivity implements Tab1.OnFragmentI
     ArrayAdapter<String> mAdapter;
     ListView lstTask;
 
+    public FragmentRefreshListener getFragmentRefreshListener() {
+        return fragmentRefreshListener;
+    }
+
+    public void setFragmentRefreshListener(FragmentRefreshListener fragmentRefreshListener) {
+        this.fragmentRefreshListener = fragmentRefreshListener;
+    }
+
+    private FragmentRefreshListener fragmentRefreshListener;
+
+    public interface FragmentRefreshListener{
+        void onRefresh();
+    }
+
     @Override
     public boolean onPrepareOptionsMenu(final Menu menu) {
         getMenuInflater().inflate(R.menu.menu, menu);
@@ -148,7 +162,9 @@ public  class MainActivity extends AppCompatActivity implements Tab1.OnFragmentI
                             public void onClick(DialogInterface dialog, int which) {
                                 String task = String.valueOf(taskEditText.getText());
                                 dbHelper.insertNewTask(task);
-
+                                if(getFragmentRefreshListener()!=null) {
+                                    getFragmentRefreshListener().onRefresh();
+                                }
                                 loadTaskList();
 
 

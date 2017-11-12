@@ -79,12 +79,12 @@ public class Tab1 extends Fragment
             mParam2 = getArguments().getString(ARG_PARAM2);
 
         }
-
+//onDestroy();
     }
 
 
     //load tasks into the list
-    private void loadTaskList() {
+    public void loadTaskList() {
 
         ArrayList<String> taskList = dbHelper.getTaskList();
         if (mAdapter == null) {
@@ -112,6 +112,13 @@ public class Tab1 extends Fragment
          lstTask = (ListView)frag1.findViewById(R.id.lstTask);
 
         loadTaskList();
+            ((MainActivity)getActivity()).setFragmentRefreshListener(new MainActivity.FragmentRefreshListener() {
+                @Override
+                public void onRefresh() {
+                    loadTaskList();
+                    // Refresh Your Fragment
+                }
+            });
             return frag1;
 
 
@@ -139,6 +146,7 @@ public class Tab1 extends Fragment
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
         }
+        onDestroy();
     }
 
     @Override
