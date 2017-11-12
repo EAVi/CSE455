@@ -100,8 +100,6 @@ public class Tab1 extends Fragment
 
     }
 
-
-
         @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -118,9 +116,6 @@ public class Tab1 extends Fragment
 
 
     }
-
-
-
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {

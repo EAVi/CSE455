@@ -23,22 +23,15 @@ public class SplashScreen extends AppCompatActivity {
                 .withFooterText("2017")
                 .withBeforeLogoText("")
                 .withAfterLogoText("Project Manager: Eric Villanueva \n Lead Developer: Nestor Saavedra \n Support Developer: Andres Zapata\nDocumentation Support: Patrick k.");
-
-
                 //text color
 
         config.getHeaderTextView().setTextColor(Color.BLACK);
         config.getFooterTextView().setTextColor(Color.BLACK);
         config.getAfterLogoTextView().setTextColor(Color.BLACK);
         config.getBeforeLogoTextView().setTextColor(Color.BLACK);
-
         //set view
-
         View view = config.create();
-
         //set view to content
-
         setContentView(view);
-
     }
 }

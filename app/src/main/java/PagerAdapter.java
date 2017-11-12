@@ -25,12 +25,6 @@ public class PagerAdapter extends FragmentPagerAdapter {
     private FragmentManager mFragmentManager;
     private Context mContext;
 
-
-
-
-
-
-
     public PagerAdapter(FragmentManager fm, int NumberOfTabs, Context context) {
         super(fm);
         this.mNoOfTabs = NumberOfTabs;
