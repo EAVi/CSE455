@@ -32,7 +32,6 @@ public class Tab2 extends Fragment {
     public Tab2() {
         // Required empty public constructor
     }
-
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
@@ -41,6 +40,7 @@ public class Tab2 extends Fragment {
      * @param param2 Parameter 2.
      * @return A new instance of fragment Tab2.
      */
+
     // TODO: Rename and change types and number of parameters
     public static Tab2 newInstance(String param1, String param2) {
         Tab2 fragment = new Tab2();
