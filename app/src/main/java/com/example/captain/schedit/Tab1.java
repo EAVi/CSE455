@@ -111,7 +111,7 @@ public class Tab1 extends Fragment
         View frag1 = inflater.inflate(R.layout.fragment_tab1, container, false);
 
         dbHelper = new DbHelper(getActivity());
-        lstTask = (ListView)frag1.findViewById(R.id.lstTask);
+         lstTask = (ListView)frag1.findViewById(R.id.lstTask);
 
         loadTaskList();
             return frag1;
@@ -130,7 +130,7 @@ public class Tab1 extends Fragment
 
     @Override
     public void onResume() {
-        //do the data changes. In this case, I am refreshing the arrayList cart_list and then calling the listview to refresh.
+        //do the data changes. In this case, I am refreshing the arrayList task_list and then calling the listview to refresh.
         super.onResume();
         loadTaskList();
         lstTask.setAdapter(mAdapter);

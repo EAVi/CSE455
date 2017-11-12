@@ -1,19 +1,14 @@
 package com.example.captain.schedit;
-
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-
 /**
  * Created by Nestor Saavedra on 11/2/2017.
  * using sqlite to store our task information
  */
-
 public class DbHelper extends SQLiteOpenHelper {
 
 //table and column definitions
@@ -52,6 +47,7 @@ public class DbHelper extends SQLiteOpenHelper {
 
         db.insertWithOnConflict(DB_TABLE,null,values,SQLiteDatabase.CONFLICT_REPLACE);
         db.close();
+
 
     }
 //delete from data base
