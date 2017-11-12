@@ -22,7 +22,7 @@ public class SplashScreen extends AppCompatActivity {
                 .withHeaderText("Welcome to Schedit")
                 .withFooterText("2017")
                 .withBeforeLogoText("")
-                .withAfterLogoText("Project Manager: Eric Villanueva \n Lead Developer: Nestor Saavedra \n Documentation Support: Andres Z. & Patrick k.");
+                .withAfterLogoText("Project Manager: Eric Villanueva \n Lead Developer: Nestor Saavedra \n Support Developer: Andres Zapata\nDocumentation Support: Patrick k.");
 
 
                 //text color
