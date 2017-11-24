@@ -134,8 +134,8 @@ public class Tab1 extends Fragment
     public void onResume() {
         //do the data changes. In this case, I am refreshing the arrayList task_list and then calling the listview to refresh.
         super.onResume();
-        loadTaskList();
-        lstTask.setAdapter(mAdapter);
+        //loadTaskList();
+        //lstTask.setAdapter(mAdapter);
     }
     @Override
     public void onAttach(Context context) {

@@ -1,6 +1,7 @@
 package com.example.captain.schedit;
 import android.app.ActionBar;
 import android.app.FragmentManager;
+import android.content.Context;
 import android.support.design.widget.TabItem;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -23,9 +24,11 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.view.View.OnClickListener;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Vector;
 import android.widget.Button;
+import android.widget.Toast;
 
 public  class MainActivity extends AppCompatActivity implements Tab1.OnFragmentInteractionListener, Tab2.OnFragmentInteractionListener, Tab3.OnFragmentInteractionListener {
 
@@ -35,6 +38,7 @@ public  class MainActivity extends AppCompatActivity implements Tab1.OnFragmentI
     }
 
     DbHelper dbHelper;
+    CalHelper calHelper;
     ArrayAdapter<String> mAdapter;
     ListView lstTask;
 
@@ -140,7 +144,6 @@ public  class MainActivity extends AppCompatActivity implements Tab1.OnFragmentI
             mAdapter.addAll(taskList);
             mAdapter.notifyDataSetChanged();
         }
-
     }
 
 //actions to do when the menu item is selected
@@ -194,9 +197,13 @@ public  class MainActivity extends AppCompatActivity implements Tab1.OnFragmentI
             getFragmentRefreshListener().onRefresh();
         }
 
+    }
 
-
-
+    //add event using the Calendar Helper class
+    //this function is still a work in progress
+    public void addEvent()
+    {
+        calHelper.addEvent(MainActivity.this);
     }
 
     @Override
