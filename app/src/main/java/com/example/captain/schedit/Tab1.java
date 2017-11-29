@@ -89,14 +89,14 @@ public class Tab1 extends Fragment
         ArrayList<String> taskList = dbHelper.getTaskList();
         if (mAdapter == null) {
             mAdapter = new ArrayAdapter<String>(getActivity(), R.layout.row, R.id.task_title, taskList);
-            lstTask.setAdapter(mAdapter);
 
         } else {
             mAdapter.clear();
             mAdapter.addAll(taskList);
             mAdapter.notifyDataSetChanged();
         }
-    super.onResume();
+        lstTask.setAdapter(mAdapter);
+        super.onResume();
 
     }
 
