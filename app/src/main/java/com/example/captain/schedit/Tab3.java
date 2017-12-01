@@ -3,10 +3,21 @@ package com.example.captain.schedit;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.prolificinteractive.materialcalendarview.CalendarDay;
+import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
 
 
 /**
@@ -89,6 +100,26 @@ public class Tab3 extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        //use the view to mark some events on the calendar view
+        MaterialCalendarView mcv = (MaterialCalendarView)view.findViewById(R.id.calendarView);
+
+        //mark today on the calendar
+        mcv.addDecorator(new TodayDecorator());
+
+        //mark some other days
+        List<CalendarDay> days = new ArrayList<>();
+        //days.add(CalendarDay.today());
+        days.add(CalendarDay.from(new Date(117, 11, 12)));//first day of hanukkah
+        days.add(CalendarDay.from(new Date(117,11,25)));//xmas
+        days.add(CalendarDay.from(new Date(117,11,26)));//first day of kwanzaa
+        int colorBlue = 0xffff0000;
+        mcv.addDecorator( new EventDecorator(colorBlue, days));
     }
 
     /**
