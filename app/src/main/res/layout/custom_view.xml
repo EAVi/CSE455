@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+<!--This custom view will allow us to have multiple data entry lines in our Alert Dialog("Where
+we are adding our task data")-->
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter a task"
+        android:id="@+id/editText" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Is this task important?"
+        android:id="@+id/editText2" />
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Task deadline?"
+        android:id="@+id/editDeadline" />
+
+</LinearLayout>

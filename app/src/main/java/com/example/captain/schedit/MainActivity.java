@@ -155,22 +155,23 @@ public  class MainActivity extends AppCompatActivity implements Tab1.OnFragmentI
 
             case R.id.action_add_task:
 
-                final EditText taskEditText = new EditText(this);
                 AlertDialog dialog = new AlertDialog.Builder(this)
                         .setTitle("Add New Task")
                         .setMessage("what do you want to do next")
-                        .setView(taskEditText)
+                        .setView(R.layout.custom_view)
                         .setPositiveButton("Add", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                String task = String.valueOf(taskEditText.getText());
+
+                                final EditText text = (EditText) ((AlertDialog)dialog).findViewById(R.id.editText);
+                                String task;
+                                task = text.getText().toString();
+
                                 dbHelper.insertNewTask(task);
                                 if(getFragmentRefreshListener()!=null) {
                                     getFragmentRefreshListener().onRefresh();
                                 }
                                 loadTaskList();
-
-
                             }
                         })
                         .setNegativeButton("Cancel",null)
