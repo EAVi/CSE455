@@ -8,17 +8,19 @@ we are adding our task data")-->
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Enter a task"
+        android:layout_marginBottom="10dp"
         android:id="@+id/editText" />
 
     <EditText
+        android:id="@+id/editDeadline"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Is this task important?"
-        android:id="@+id/editText2" />
-    <EditText
+        android:layout_marginBottom="10dp"
+        android:hint="Task deadline?" />
+    <Switch
+        android:id="@+id/switchImportance"
         android:layout_width="match_parent"
+        android:layout_margin="10dp"
         android:layout_height="wrap_content"
-        android:hint="Task deadline?"
-        android:id="@+id/editDeadline" />
-
+        android:text=" Is this task important?" />
 </LinearLayout>
