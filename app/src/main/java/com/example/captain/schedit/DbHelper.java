@@ -15,11 +15,10 @@ public class DbHelper extends SQLiteOpenHelper {
     //changed database
     private static final String DB_NAME= "SCHEDITDB";
     private static final  int DB_VER = 1;
-    public static final String DB_TABLE = "Tasks";
+    public static final String DB_TABLE = "TasksAndDate";
     public static final String DB_COLUMN = "TaskName";
     public static final String DB_COLUMN1 = "FavTask";
-    public static final String DB_COLUMN2 = "ImportantTask";
-    public static final String DB_COLUMN3 = "EndingSoonTask";
+    public static final String DB_COLUMN2 = "Date";
 
     public DbHelper(Context context) {
         super(context, DB_NAME,null, DB_VER);
@@ -27,7 +26,7 @@ public class DbHelper extends SQLiteOpenHelper {
 //Create the table
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String query = String.format("CREATE TABLE %s (ID INTEGER PRIMARY KEY AUTOINCREMENT, %s TEXT NOT NULL );", DB_TABLE,DB_COLUMN);
+        String query = String.format("CREATE TABLE %s (ID INTEGER PRIMARY KEY AUTOINCREMENT, %s TEXT NOT NULL, %s TEXT NOT NULL, %s TEXT NOT NULL  );", DB_TABLE,DB_COLUMN,DB_COLUMN1, DB_COLUMN2);
         db.execSQL(query);
     }
 //if the table exists delete it
@@ -39,16 +38,21 @@ public class DbHelper extends SQLiteOpenHelper {
     }
 
 //add an item to the database
-    public void insertNewTask(String task){
+    public boolean insertNewTask(String task, String fav, String date){
 
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(DB_COLUMN, task);
+        values.put(DB_COLUMN1, fav);
+        values.put(DB_COLUMN2, date);
 
-        db.insertWithOnConflict(DB_TABLE,null,values,SQLiteDatabase.CONFLICT_REPLACE);
-        db.close();
+        long result  = db.insert(DB_TABLE, null, values);
 
-
+        if(result == -1){
+            return false;
+        }else{
+            return true;
+        }
     }
 //delete from data base
     public void deleteTask(String task){
@@ -62,11 +66,19 @@ public class DbHelper extends SQLiteOpenHelper {
 
         ArrayList< String > taskList = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.query(DB_TABLE,new String[]{DB_COLUMN},null,null,null,null,null);
+        Cursor cursor = db.query(DB_TABLE,new String[]{DB_COLUMN, DB_COLUMN1, DB_COLUMN2},null,null,null,null,null);
 
         while (cursor.moveToNext()){
             int index = cursor.getColumnIndex(DB_COLUMN);
-            taskList.add(cursor.getString(index));
+            int index1 = cursor.getColumnIndex(DB_COLUMN1);
+            int index2 = cursor.getColumnIndex(DB_COLUMN2);
+            taskList.add("Task: " + cursor.getString(index) + " \n"
+                     +  "Level: "+ cursor.getString(index1) + " \n"
+                     + "Date: " +   cursor.getString(index2)
+            );
+
+
+
 
         }
         cursor.close();

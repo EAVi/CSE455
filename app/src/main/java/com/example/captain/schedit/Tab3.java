@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
@@ -37,8 +38,10 @@ public class Tab3 extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private MaterialCalendarView mcv = null;
 
     private OnFragmentInteractionListener mListener;
+    public static ArrayList<CalendarDay> mDayList = new ArrayList<>();
 
     public Tab3() {
         // Required empty public constructor
@@ -74,8 +77,22 @@ public class Tab3 extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        View frag3 = inflater.inflate(R.layout.fragment_tab3, container, false);;
+
+        //set a refresh listener
+        ((MainActivity)getActivity()).setFragmentRefreshListener(new MainActivity.FragmentRefreshListener() {
+            @Override
+            public void onRefresh() {
+                refreshTab();
+                // Refresh Your Fragment
+            }
+        });
+
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_tab3, container, false);
+        return frag3;
+
+
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -118,8 +135,8 @@ public class Tab3 extends Fragment {
         days.add(CalendarDay.from(new Date(117, 11, 12)));//first day of hanukkah
         days.add(CalendarDay.from(new Date(117,11,25)));//xmas
         days.add(CalendarDay.from(new Date(117,11,26)));//first day of kwanzaa
-        int colorBlue = 0xffff0000;
-        mcv.addDecorator( new EventDecorator(colorBlue, days));
+        int colorRed = 0xffff0000;
+        mcv.addDecorator( new EventDecorator(colorRed, days));
     }
 
     /**
@@ -135,5 +152,31 @@ public class Tab3 extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        refreshTab();
+    }
+
+    private void refreshTab()
+    {
+        mcv = (MaterialCalendarView)getView().findViewById(R.id.calendarView);
+        if (mcv != null)
+        {
+            int colorBlue = 0xff0000ff;
+            mcv.addDecorator( new EventDecorator(colorBlue, mDayList));
+            //mcv.invalidateDecorators();
+        }
+        else
+        {
+            CharSequence failure = "NULL ptr error on refresh view";
+            int duration = Toast.LENGTH_SHORT;
+            Toast toast = Toast.makeText(getContext(), failure, duration);
+            toast.show();
+            mDayList.clear();
+        }
     }
 }

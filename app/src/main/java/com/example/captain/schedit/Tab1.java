@@ -112,14 +112,14 @@ public class Tab1 extends Fragment
          lstTask = (ListView)frag1.findViewById(R.id.lstTask);
 
         loadTaskList();
-            ((MainActivity)getActivity()).setFragmentRefreshListener(new MainActivity.FragmentRefreshListener() {
-                @Override
-                public void onRefresh() {
-                    loadTaskList();
-                    // Refresh Your Fragment
-                }
-            });
-            return frag1;
+        ((MainActivity)getActivity()).setFragmentRefreshListener(new MainActivity.FragmentRefreshListener() {
+            @Override
+            public void onRefresh() {
+                loadTaskList();
+                // Refresh Your Fragment
+            }
+        });
+        return frag1;
 
 
     }

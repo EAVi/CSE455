@@ -1,34 +1,33 @@
 package com.example.captain.schedit;
-import android.app.ActionBar;
-import android.app.FragmentManager;
-import android.content.Context;
-import android.support.design.widget.TabItem;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.support.v7.widget.Toolbar;
+import android.app.DatePickerDialog;
+import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.net.Uri;
-import android.support.v4.view.PagerAdapter;
-import android.support.v4.app.Fragment;
+import android.os.Bundle;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.view.View.OnClickListener;
+
+import com.prolificinteractive.materialcalendarview.CalendarDay;
+
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Vector;
-import android.widget.Button;
-import android.widget.Toast;
 
 public  class MainActivity extends AppCompatActivity implements Tab1.OnFragmentInteractionListener, Tab2.OnFragmentInteractionListener, Tab3.OnFragmentInteractionListener {
 
@@ -165,9 +164,23 @@ public  class MainActivity extends AppCompatActivity implements Tab1.OnFragmentI
 
                                 final EditText text = (EditText) ((AlertDialog)dialog).findViewById(R.id.editText);
                                 String task;
+                                String fav = "Not Important";
                                 task = text.getText().toString();
+                                final Calendar c = Calendar.getInstance();
+                                int year = c.get(Calendar.YEAR);
+                                int month = c.get(Calendar.MONTH);
+                                int day = c.get(Calendar.DAY_OF_MONTH);
+                                DatePickerDialog datepicker = new DatePickerDialog(MainActivity.this, datePickerListener,
+                                        year, month,day);
+                                datepicker.show();
 
-                                dbHelper.insertNewTask(task);
+                                String date = new String();
+                                date = ("" + year + "/" + month + "/" + day);
+
+                                //if you want to insert a new task using the date picker dialog, you'd need to move the insertNewTask function to onDateSet
+                                //this would mean that you'd need to also store the task name somewhere temporarily while waiting for the dialog input
+                                dbHelper.insertNewTask(task, fav, date);
+
                                 if(getFragmentRefreshListener()!=null) {
                                     getFragmentRefreshListener().onRefresh();
                                 }
@@ -211,4 +224,18 @@ public  class MainActivity extends AppCompatActivity implements Tab1.OnFragmentI
     public void onFragmentInteraction(Uri uri) {
 
     }
+
+    private DatePickerDialog.OnDateSetListener datePickerListener
+            = new DatePickerDialog.OnDateSetListener() {
+
+        // when dialog box is closed, below method will be called.
+        public void onDateSet(DatePicker view, int selectedYear,
+                              int selectedMonth, int selectedDay) {
+            Tab3.mDayList.add(CalendarDay.from(new Date(selectedYear - 1900, selectedMonth, selectedDay )));
+
+            if(getFragmentRefreshListener()!=null) {
+                getFragmentRefreshListener().onRefresh();
+            }
+        }
+    };
 }
