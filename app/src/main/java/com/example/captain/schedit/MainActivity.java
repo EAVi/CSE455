@@ -153,7 +153,7 @@ public  class MainActivity extends AppCompatActivity implements Tab1.OnFragmentI
         switch (item.getItemId()){
 
             case R.id.action_add_task:
-
+//
                 AlertDialog dialog = new AlertDialog.Builder(this)
                         .setTitle("Add New Task")
                         .setMessage("what do you want to do next")
