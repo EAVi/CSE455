@@ -87,6 +87,7 @@ public class Tab1 extends Fragment
     public void loadTaskList() {
 
         ArrayList<String> taskList = dbHelper.getTaskList();
+
         if (mAdapter == null) {
             mAdapter = new ArrayAdapter<String>(getActivity(), R.layout.row, R.id.task_title, taskList);
 

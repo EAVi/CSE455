@@ -67,7 +67,7 @@ public  class MainActivity extends AppCompatActivity implements Tab1.OnFragmentI
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.app_bar);
         setSupportActionBar(toolbar);
 
@@ -135,8 +135,10 @@ public  class MainActivity extends AppCompatActivity implements Tab1.OnFragmentI
 // load tasks into the list
     private void loadTaskList(){
         ArrayList<String> taskList = dbHelper.getTaskList();
+
         if(mAdapter==null){
             mAdapter = new ArrayAdapter<String>(this,R.layout.row,R.id.task_title,taskList);
+
             lstTask.setAdapter(mAdapter);
         }else {
             mAdapter.clear();
@@ -153,7 +155,7 @@ public  class MainActivity extends AppCompatActivity implements Tab1.OnFragmentI
         switch (item.getItemId()){
 
             case R.id.action_add_task:
-//
+
                 AlertDialog dialog = new AlertDialog.Builder(this)
                         .setTitle("Add New Task")
                         .setMessage("what do you want to do next")

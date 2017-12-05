@@ -65,19 +65,15 @@ public class DbHelper extends SQLiteOpenHelper {
     public ArrayList<String> getTaskList(){
 
         ArrayList< String > taskList = new ArrayList<>();
+
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.query(DB_TABLE,new String[]{DB_COLUMN, DB_COLUMN1, DB_COLUMN2},null,null,null,null,null);
 
         while (cursor.moveToNext()){
             int index = cursor.getColumnIndex(DB_COLUMN);
-            int index1 = cursor.getColumnIndex(DB_COLUMN1);
-            int index2 = cursor.getColumnIndex(DB_COLUMN2);
-            taskList.add("Task: " + cursor.getString(index) + " \n"
-                     +  "Level: "+ cursor.getString(index1) + " \n"
-                     + "Date: " +   cursor.getString(index2)
-            );
 
 
+            taskList.add(cursor.getString(index));
 
 
         }
@@ -87,6 +83,9 @@ public class DbHelper extends SQLiteOpenHelper {
 
 
     }
+
+
+
 
 }
 
