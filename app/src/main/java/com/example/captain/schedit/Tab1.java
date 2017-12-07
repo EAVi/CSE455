@@ -12,6 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -38,7 +39,7 @@ public class Tab1 extends Fragment
 
 //==============================================
     DbHelper dbHelper;
-    ArrayAdapter<String> mAdapter;
+    ArrayAdapter<CalEvent> mAdapter;
     ListView lstTask;
 //===============================================
     public Tab1() {
@@ -86,10 +87,10 @@ public class Tab1 extends Fragment
     //load tasks into the list
     public void loadTaskList() {
 
-        ArrayList<String> taskList = dbHelper.getTaskList();
+        List<CalEvent> taskList = dbHelper.getEventList();
 
         if (mAdapter == null) {
-            mAdapter = new ArrayAdapter<String>(getActivity(), R.layout.row, R.id.task_title, taskList);
+            mAdapter = new EventListAdapter(getContext(),taskList);
 
         } else {
             mAdapter.clear();

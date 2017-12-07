@@ -232,7 +232,7 @@ public  class MainActivity extends AppCompatActivity implements Tab1.OnFragmentI
             if (view.isShown()){//in android versions 4.x there is a bug where the dialogue is called twice, this is a condition which fixes the issue
                 Tab3.mDayList.add(CalendarDay.from(new Date(selectedYear - 1900, selectedMonth, selectedDay )));
                 String date = new String();
-                date = ("" + selectedYear + "/" + selectedMonth + "/" + selectedDay);
+                date = ("" + selectedYear + "/" + (selectedMonth + 1) + "/" + selectedDay);
                 dbHelper.insertNewTask(mTask, mFavorite, date);
                 if(getFragmentRefreshListener()!=null) {
                     getFragmentRefreshListener().onRefresh();

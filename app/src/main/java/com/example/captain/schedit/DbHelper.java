@@ -80,11 +80,28 @@ public class DbHelper extends SQLiteOpenHelper {
         cursor.close();
         db.close();
         return taskList;
-
-
     }
 
+    //like getTaskList, but returns CalEvent instead of strings
+    public ArrayList<CalEvent> getEventList()
+    {
 
+        ArrayList< CalEvent > eventList = new ArrayList<>();
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.query(DB_TABLE,new String[]{DB_COLUMN, DB_COLUMN1, DB_COLUMN2},null,null,null,null,null);
+
+        while (cursor.moveToNext()){
+            int index = cursor.getColumnIndex(DB_COLUMN);
+            String taskName = cursor.getString(index);
+            String taskFav = cursor.getString(index + 1);
+            String taskDate = cursor.getString(index + 2);
+            eventList.add(new CalEvent(taskName, taskDate, taskFav));
+        }
+        cursor.close();
+        db.close();
+        return eventList;
+    }
 
 
 }
