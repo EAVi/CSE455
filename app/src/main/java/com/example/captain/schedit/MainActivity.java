@@ -41,6 +41,10 @@ public  class MainActivity extends AppCompatActivity implements Tab1.OnFragmentI
     ArrayAdapter<String> mAdapter;
     ListView lstTask;
 
+    //private variables needed for temporary task storage
+    private String mTask;
+    private String mFavorite;
+
     public FragmentRefreshListener getFragmentRefreshListener() {
         return fragmentRefreshListener;
     }
@@ -176,17 +180,9 @@ public  class MainActivity extends AppCompatActivity implements Tab1.OnFragmentI
                                         year, month,day);
                                 datepicker.show();
 
-                                String date = new String();
-                                date = ("" + year + "/" + month + "/" + day);
-
-                                //if you want to insert a new task using the date picker dialog, you'd need to move the insertNewTask function to onDateSet
-                                //this would mean that you'd need to also store the task name somewhere temporarily while waiting for the dialog input
-                                dbHelper.insertNewTask(task, fav, date);
-
-                                if(getFragmentRefreshListener()!=null) {
-                                    getFragmentRefreshListener().onRefresh();
-                                }
-                                loadTaskList();
+                                mFavorite = fav;
+                                mTask = task;
+                                //the dbhelper.insertNewTask function is called in the date picker dialogue
                             }
                         })
                         .setNegativeButton("Cancel",null)
@@ -233,10 +229,14 @@ public  class MainActivity extends AppCompatActivity implements Tab1.OnFragmentI
         // when dialog box is closed, below method will be called.
         public void onDateSet(DatePicker view, int selectedYear,
                               int selectedMonth, int selectedDay) {
-            Tab3.mDayList.add(CalendarDay.from(new Date(selectedYear - 1900, selectedMonth, selectedDay )));
-
-            if(getFragmentRefreshListener()!=null) {
-                getFragmentRefreshListener().onRefresh();
+            if (view.isShown()){//in android versions 4.x there is a bug where the dialogue is called twice, this is a condition which fixes the issue
+                Tab3.mDayList.add(CalendarDay.from(new Date(selectedYear - 1900, selectedMonth, selectedDay )));
+                String date = new String();
+                date = ("" + selectedYear + "/" + selectedMonth + "/" + selectedDay);
+                dbHelper.insertNewTask(mTask, mFavorite, date);
+                if(getFragmentRefreshListener()!=null) {
+                    getFragmentRefreshListener().onRefresh();
+                }
             }
         }
     };
