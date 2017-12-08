@@ -4,7 +4,15 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+
+import com.prolificinteractive.materialcalendarview.CalendarDay;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
+
 /**
  * Created by Nestor Saavedra on 11/2/2017.
  * using sqlite to store our task information
@@ -97,6 +105,57 @@ public class DbHelper extends SQLiteOpenHelper {
             String taskFav = cursor.getString(index + 1);
             String taskDate = cursor.getString(index + 2);
             eventList.add(new CalEvent(taskName, taskDate, taskFav));
+        }
+        cursor.close();
+        db.close();
+        return eventList;
+    }
+
+    //like getTaskList, but returns CalendarDay instead of String
+    public ArrayList<CalendarDay> getCalendarDayList()
+    {
+
+        ArrayList< CalendarDay > eventList = new ArrayList<>();
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.query(DB_TABLE,new String[]{DB_COLUMN, DB_COLUMN1, DB_COLUMN2},null,null,null,null,null);
+
+        while (cursor.moveToNext()){
+            int index = cursor.getColumnIndex(DB_COLUMN);
+            String taskDate = cursor.getString(index + 2);
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd", Locale.ENGLISH);
+            CalendarDay cday;
+            Date date;
+            try {
+                date = new SimpleDateFormat("yyyy/MM/dd").parse(taskDate);
+            } catch (ParseException e) {
+                e.printStackTrace();
+                date = new Date(0,0,0);
+            }
+            cday = CalendarDay.from(date);
+            eventList.add(cday);
+        }
+        cursor.close();
+        db.close();
+        return eventList;
+    }
+
+    //like getTaskList, but returns CalEvent instead of strings
+    public ArrayList<String> getEventFromDay(String date)
+    {
+        ArrayList< String > eventList = new ArrayList<>();
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.query(DB_TABLE,new String[]{DB_COLUMN, DB_COLUMN1, DB_COLUMN2},null,null,null,null,null);
+
+        while (cursor.moveToNext()){
+            int index = cursor.getColumnIndex(DB_COLUMN);
+            String taskName = cursor.getString(index);
+            String taskDate = cursor.getString(index + 2);
+            if (date.equals(taskDate))//do not use == operator with strings
+            {
+                eventList.add(taskName);
+            }
         }
         cursor.close();
         db.close();

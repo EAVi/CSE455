@@ -3,6 +3,7 @@ package com.example.captain.schedit;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -12,6 +13,7 @@ import android.widget.Toast;
 
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
+import com.prolificinteractive.materialcalendarview.OnDateSelectedListener;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -29,7 +31,7 @@ import java.util.List;
  * Use the {@link Tab3#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class Tab3 extends Fragment {
+public class Tab3 extends Fragment implements OnDateSelectedListener{
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -39,6 +41,7 @@ public class Tab3 extends Fragment {
     private String mParam1;
     private String mParam2;
     private MaterialCalendarView mcv = null;
+    private Boolean mLoaded = false;
 
     private OnFragmentInteractionListener mListener;
     public static ArrayList<CalendarDay> mDayList = new ArrayList<>();
@@ -126,11 +129,19 @@ public class Tab3 extends Fragment {
         //use the view to mark some events on the calendar view
         MaterialCalendarView mcv = (MaterialCalendarView)view.findViewById(R.id.calendarView);
 
+        mcv.setOnDateChangedListener(this);
+        //mcv.setOnMonthChangedListener(this);
+
         //mark today on the calendar
         mcv.addDecorator(new TodayDecorator());
 
         //mark some other days
         List<CalendarDay> days = new ArrayList<>();
+        if (!mLoaded) {//when screen is first viewed, dates are read from the database
+            DbHelper dbHelper = new DbHelper(getActivity());
+            days.addAll(dbHelper.getCalendarDayList());
+            mLoaded = true;
+        }
         //days.add(CalendarDay.today());
         days.add(CalendarDay.from(new Date(117, 11, 12)));//first day of hanukkah
         days.add(CalendarDay.from(new Date(117,11,25)));//xmas
@@ -178,5 +189,36 @@ public class Tab3 extends Fragment {
             toast.show();
             mDayList.clear();
         }
+    }
+
+    @Override
+    public void onDateSelected(@NonNull MaterialCalendarView widget, @Nullable CalendarDay date, boolean selected) {
+        //CharSequence text = "Permission Denied";
+        DbHelper dbHelper = new DbHelper(getActivity());
+        mLoaded = true;
+        String sDate = ("" + date.getYear() + "/" + (date.getMonth() + 1)+ "/" + date.getDay());
+        ArrayList<String> a = dbHelper.getEventFromDay(sDate);
+        String taskText = new String();
+        taskText += "Events for " + sDate + ":";
+        for (int i = 0; i < a.size(); ++i)
+        {
+            taskText += "\n";
+            taskText += a.get(i);
+        }
+        if (a.isEmpty())
+        {
+            String text = "No Events on " + sDate;
+            int duration = Toast.LENGTH_SHORT;
+            Toast toast = Toast.makeText(getContext(), text, duration);
+            toast.show();
+        }
+        else
+        {
+            //String text = "No Events planned for that day";
+            int duration = Toast.LENGTH_SHORT;
+            Toast toast = Toast.makeText(getContext(), taskText, duration);
+            toast.show();
+        }
+        //textView.setText(getSelectedDatesString());
     }
 }
